@@ -1,0 +1,136 @@
+/* ---- Dev panel (browser preview only) ----------------------------------- */
+/* pointer-events: auto overrides the body's none so the panel is clickable. */
+.dev-panel {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 210px;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background: rgba(12, 13, 18, 0.93);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 12px 12px;
+  font: 11px / 1.45 ui-monospace, "SF Mono", monospace;
+  color: #c8c8c8;
+  pointer-events: auto;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.dev-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.dev-label {
+  font-size: 10px;
+  opacity: 0.45;
+  margin: 7px 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.dev-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.dev-btn {
+  padding: 3px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.06);
+  color: #a0a0a0;
+  font: 10px / 1 ui-monospace, "SF Mono", monospace;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+}
+.dev-btn:hover {
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
+}
+.dev-btn.active {
+  background: rgba(58, 122, 254, 0.28);
+  border-color: rgba(58, 122, 254, 0.55);
+  color: #a8c8ff;
+}
+.dev-btn.flash {
+  background: rgba(94, 198, 255, 0.55);
+  border-color: rgba(94, 198, 255, 0.85);
+  color: #ffffff;
+}
+.dev-readout {
+  margin: 8px 0 0;
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.35);
+  font: 10px / 1.65 ui-monospace, "SF Mono", monospace;
+  color: #606070;
+  white-space: pre;
+}
+.dev-panel.collapsed { overflow: hidden; }
+.dev-panel.collapsed > :not(.dev-title) { display: none; }
+
+/* Preview-only usage hint (bottom-left) */
+.dev-hint {
+  position: fixed;
+  left: 12px;
+  bottom: 10px;
+  max-width: 62vw;
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.32);
+  color: rgba(255, 255, 255, 0.5);
+  font: 11px / 1.4 ui-monospace, "SF Mono", monospace;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Touch / small screens: full-width panel so buttons wrap & fit, bigger taps */
+@media (pointer: coarse), (max-width: 700px) {
+  .dev-panel {
+    left: 8px; right: 8px; width: auto;        /* span the screen, minus margins */
+    top: 8px; max-height: 60vh; padding: 12px 14px 14px;
+  }
+  .dev-title { font-size: 15px; }
+  .dev-label { font-size: 11px; }
+  .dev-btn { padding: 8px 11px; font-size: 12px; border-radius: 6px; }
+  .dev-row { gap: 6px; }
+  .dev-readout { font-size: 11px; }
+  .dev-hint { font-size: 12px; max-width: 70vw; }
+}
+
+/* ---- Main overlay (the Cursa window itself) ----------------------------- */
+/* The window is transparent and click-through; the page must not paint or
+   intercept anything. Only the canvas draws. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  /* Belt-and-suspenders with the Rust-side ignore_cursor_events. */
+  pointer-events: none;
+  /* Never show a text caret or selection. */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: none;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  background: transparent;
+  pointer-events: none;
+}

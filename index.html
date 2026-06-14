@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursa</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="stage"></canvas>
+
+    <!-- Dev panel: shown only in browser preview mode (npm run preview).
+         Hidden in Tauri — window is click-through; use console instead:
+           window.cursaForce = { stage: 'old', context: 'gaming', prop: 'controller' } -->
+    <div id="dev" class="dev-panel" hidden>
+      <div class="dev-title">Cursa Dev</div>
+
+      <div class="dev-label">Age stage (2–7)</div>
+      <div id="dev-stages" class="dev-row"></div>
+
+      <div class="dev-label">Context / page (8–29)</div>
+      <div id="dev-contexts" class="dev-row"></div>
+
+      <div class="dev-label">Events — one-shot (38–66)</div>
+      <div id="dev-events" class="dev-row"></div>
+
+      <div class="dev-label">Held states (30,46,48,51,58,60,61,53)</div>
+      <div id="dev-held" class="dev-row"></div>
+
+      <div class="dev-label">Force prop / pose</div>
+      <div id="dev-props" class="dev-row"></div>
+
+      <div class="dev-label">Force visuals</div>
+      <div id="dev-force" class="dev-row"></div>
+
+      <div class="dev-label">Actions</div>
+      <div class="dev-row">
+        <button id="dev-startup-btn" class="dev-btn">startup anim (1)</button>
+      </div>
+
+      <pre id="dev-readout" class="dev-readout">loading…</pre>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
